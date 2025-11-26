@@ -24,12 +24,18 @@ export async function POST(request: NextRequest) {
 
     const supabase = getSupabaseClient();
     if (supabase) {
-      await supabase
-        .from("proposals")
-        .insert({ lead_name: lead, content_html: proposalHtml, tone })
-        .catch((err: unknown) => {
-          console.warn("Supabase insert skipped", (err as Error).message);
+      try {
+        const { error: supabaseError } = await supabase.from("proposals").insert({
+          lead_name: lead,
+          content_html: proposalHtml,
+          tone,
         });
+        if (supabaseError) {
+          console.warn("Supabase insert skipped", supabaseError.message);
+        }
+      } catch (err) {
+        console.warn("Supabase insert skipped", (err as Error).message);
+      }
     }
 
     return NextResponse.json({ proposalHtml });
