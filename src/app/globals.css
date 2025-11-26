@@ -1,0 +1,81 @@
+@import "tailwindcss";
+
+:root {
+  color-scheme: dark;
+  --color-deep: #071428;
+  --color-primary: #0ea5ff;
+  --color-violet: #7c3aed;
+  --color-cyan: #06b6d4;
+  --color-glass: rgba(255, 255, 255, 0.08);
+  --cursor-x: 50vw;
+  --cursor-y: 50vh;
+}
+
+@theme inline {
+  --color-background: var(--color-deep);
+  --color-foreground: #f8fbff;
+  --color-primary: var(--color-primary);
+  --color-secondary: var(--color-violet);
+  --font-sans: var(--font-inter);
+  --font-mono: var(--font-jetbrains);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: radial-gradient(circle at top, rgba(14, 165, 255, 0.35), transparent 45%),
+    radial-gradient(circle at 20% 20%, rgba(124, 58, 237, 0.35), transparent 40%),
+    var(--color-deep);
+  color: white;
+  font-family: var(--font-inter), "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+main {
+  position: relative;
+  z-index: 10;
+}
+
+::selection {
+  background: rgba(14, 165, 255, 0.4);
+  color: white;
+}
+
+.gradient-grid::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+  background-size: 40px 40px;
+  opacity: 0.6;
+  pointer-events: none;
+  border-radius: inherit;
+}
+
+.cursor-glow::after {
+  content: "";
+  position: fixed;
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, rgba(14, 165, 255, 0.2), transparent 60%);
+  top: 0;
+  left: 0;
+  transform: translate(calc(var(--cursor-x) - 200px), calc(var(--cursor-y) - 200px));
+  pointer-events: none;
+  z-index: 0;
+  transition: transform 120ms ease-out;
+}
+
+.card-glow {
+  box-shadow: 0 40px 120px rgba(6, 182, 212, 0.12);
+}
+
+@media (max-width: 768px) {
+  body {
+    padding-bottom: 6rem;
+  }
+}
